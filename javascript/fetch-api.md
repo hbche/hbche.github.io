@@ -61,6 +61,77 @@ async function fetchText() {
 }
 ```
 
+上面示例中，`response.status` 和 `response.textStatus` 就是 Response 的同步属性，可以立即读取。
+
+Response对象有以下属性：
+
+| 属性                | 说明                                                         |
+| ------------------- | ------------------------------------------------------------ |
+| Response.headers    | 只读，包含此Response关联的[Headers](https://developer.mozilla.org/zh-CN/docs/Web/API/Headers)对象 |
+| Response.ok         | 只读，布尔值，标识该Response成功(HTTP状态码的范围在200~299)  |
+| Response.redirected | 只读，表示该Response是狗来自重定向，如果是，它的URL列表将会有多个条目 |
+| Response.status     | 只读，包含Response的状态码                                   |
+| Response.textStatus | 只读，包含与该状态码一致的状态信息(例如，OK对应200)          |
+| Response.type       | 只读，包含该Response的类型(例如，basic、cors)                |
+| Response.url        | 只读，表示Response的URL                                      |
+| Response.body       | 只读，一个简单的getter，用于暴露一个[ReadableStream](https://developer.mozilla.org/zh-CN/docs/Web/API/ReadableStream)类型的body内容 |
+| Body.bodyUsed       | 标识该Response是否读取过Body                                 |
+
+Response.type
+
+- basic：标准值，同源响应，带有所有的头部信息除了"Set-Cookie"和"Set-Cookie2"
+- cors：Response 接收到了一个有效的跨域请求.
+- error：网络错误
+- opaque：响应"no-cors"的跨域请求
+
+Response对象有以下方法：
+
+| 方法          | 说明                                                         |
+| ------------- | ------------------------------------------------------------ |
+| clone()       | 创建一个Response对象的克隆                                   |
+| error()       | 返回一个绑定了网络错误的新的Response对象                     |
+| redirect()    | 用另一个URL创建一个新的Response                              |
+| arrayBuffer() | 读取Response对象并且将它设置为已读，并返回一个被解析为 [ArrayBuffer ](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)格式的Promise对象 |
+| blob()        | 读取Response对象并且将它设置为已读，并返回一个被解析为 [Blob](https://developer.mozilla.org/zh-CN/docs/Web/API/Blob)格式的Promise对象 |
+| formData()    | 读取Response对象并且将它设置为已读，并返回一个被解析为[FormData](https://developer.mozilla.org/zh-CN/docs/Web/API/FormData)格式的Promise对象 |
+| json()        | 读取Response对象并且将其设置为已读，并返回一个被解析为JSON格式的Promise对象 |
+| text()        | 读取Response对象并且将其设置为已读，并返回一个被解析为[USVString](https://developer.mozilla.org/zh-CN/docs/Web/API/USVString)格式的Promise对象 |
+
+#### 判断是否请求成功
+
+fetch() 请求成功后，有一个很重要的注意点：只有网络错误，或者无法连接时，fetch() 才会报错，其他情况都不会报错，而是认为请求成功。
+
+这就是说，即使服务器返回的状态码是 4xx 或者 5xx ，fetch() 也不会报错(即Promise不会变为 `reject` 状态)
+
+只有通过 `Response.status` 属性得到HTTP回想的真实状态码，才能判断请求是成功。
+
+``` js
+async function fetchText() {
+    const response = await fetch('/readme.txt');
+    if (response.status >= 200 && response.status < 300) {
+        return await response.text();
+    } else {
+        throw new Error(response.statusText);
+    }
+}
+```
+
+上面的示例中，`response.status` 属性只会等于 2xx(200~299)，才能认定请求成功。这里不用考虑网址跳转(3xx)，因为 `fetch()` 会将跳转的状态自动转为200。
+
+另一种方法是判断 `response.ok` 是否为 `true`。
+
+``` js
+if (response.ok) {
+    // 请求成功
+} else {
+    // 请求失败
+}
+```
+
+#### Response.headers属性
+
+Response对象还有一个
+
 ### fetch()的第二个参数：定制HTTP请求
 
 ### fetch()配置对象的完整API
