@@ -1,4 +1,4 @@
-****# React.Component
+# React.Component
 
 ## 概览
 
