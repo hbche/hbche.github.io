@@ -1,0 +1,11 @@
+body {
+  background-color: #ccc;
+  user-select: text;
+}
+
+body div {
+  height: 2800px;
+  scrollbar-width: 3px;
+  scrollbar-color: #ccc;
+  scrollbar-darkshadow-color: burlywood;
+}

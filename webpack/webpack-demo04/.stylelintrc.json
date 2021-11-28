@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "indentation": 4,
+    "number-leading-zero": "never",
+    "unit-allowed-list": ["em", "rem", "s", "%"],
+    "color-function-notation": "legacy"
+  }
+}
