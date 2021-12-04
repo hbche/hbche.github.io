@@ -1,16 +1,16 @@
 # Webpack 基础用法
 
-1. 打包 CSS
-2. 打包 HTML
-3. 打包 JS
-4. 打包图片
-5. 打包字体
+1. 编译 CSS
+2. 编译 HTML
+3. 编译 JS
+4. 编译图片
+5. 编译字体
 6. 资源模块 (Asset Modules)
 7. 开发服务器 (Dev Server
 
 ## 编译 CSS
 
-### 将 CSS 打包成独立的文件 [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin#getting-started)
+### 将 CSS 编译成独立的文件 [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin#getting-started)
 
 1. 安装 mini-css-extract-plugin
 
@@ -43,41 +43,41 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'main.js',
-  },
-  mode: 'development',
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: [
-          // 将 CSS 代码编译为单独的文件
-          MiniCssExtractPlugin.loader,
-          // 对 CSS 代码进行编译，将 css 代码加载到 js 代码中，作为模块管理
-          'css-loader',
-        ],
-      },
-    ],
-  },
-  plugins: [
-    // MiniCssExtractPlugin 插件默认生成的 css 文件名称和编译前一样，如果需要单独指定编译后的 css 文件的目录和名称，可以使用该插件的 filename 属性
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
-    }),
-    new HtmlWebpackPlugin({
-      // 指定生成的 html 页面的 title
-      title: 'css-compile',
-      // 指定 HtmlWebpackPlugin 的静态模板文件来生成 index.html
-      template: './index.html',
-    }),
-  ],
+	entry: './src/index.js',
+	output: {
+		path: path.resolve(__dirname, './dist'),
+		filename: 'main.js',
+	},
+	mode: 'development',
+	module: {
+		rules: [
+			{
+				test: /\.css$/i,
+				use: [
+					// 将 CSS 代码编译为单独的文件
+					MiniCssExtractPlugin.loader,
+					// 对 CSS 代码进行编译，将 css 代码加载到 js 代码中，作为模块管理
+					'css-loader',
+				],
+			},
+		],
+	},
+	plugins: [
+		// MiniCssExtractPlugin 插件默认生成的 css 文件名称和编译前一样，如果需要单独指定编译后的 css 文件的目录和名称，可以使用该插件的 filename 属性
+		new MiniCssExtractPlugin({
+			filename: 'css/[name].css',
+		}),
+		new HtmlWebpackPlugin({
+			// 指定生成的 html 页面的 title
+			title: 'css-compile',
+			// 指定 HtmlWebpackPlugin 的静态模板文件来生成 index.html
+			template: './index.html',
+		}),
+	],
 };
 ```
 
-### 添加样式前缀 [postcss-autoprefixer-webpack](https://github.com/postcss/autoprefixer#webpack)
+### 添加样式前缀 [postcss-loader](https://github.com/webpack-contrib/postcss-loader) + [autoprefixer](https://github.com/postcss/autoprefixer#webpack)
 
 - 场景：对于新的 CSS 样式，对浏览器有兼容性问题，需要对属性加浏览器前缀
 - 使用 webpack 插件对 css 样式添加前缀
@@ -92,8 +92,8 @@ npm install postcss-loader autoprefixer --save-dev
 
 ```js
 {
-    test: /\.css$/i,
-    use: [MiniCssExreact.loader, 'css-loader', 'postcss-loader']
+  test: /\.css$/i,
+  use: [MiniCssExreact.loader, 'css-loader', 'postcss-loader']
 }
 ```
 
@@ -147,7 +147,7 @@ not ie <= 8: 浏览器范围取反。IE 浏览器版本 高于8。
 
 ```css
 .none-select {
-  user-select: none;
+	user-select: none;
 }
 ```
 
@@ -155,10 +155,10 @@ not ie <= 8: 浏览器范围取反。IE 浏览器版本 高于8。
 
 ```css
 .none-select {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 ```
 
@@ -184,8 +184,8 @@ const StylelintPlugin = require('stylelint-webpack-plugin');
 
 ```js
 new StylintPlugin({
-  // 指定规则应用的文件，目的是剔除编译后的 css 文件
-  files: ['src/**/*.{css, less, sacc, scss}'],
+	// 指定规则应用的文件，目的是剔除编译后的 css 文件
+	files: ['src/**/*.{css, less, sacc, scss}'],
 });
 ```
 
@@ -203,13 +203,13 @@ new StylintPlugin({
 
 ```json
 {
-  "extends": "stylelint-config-standard",
-  "rules": {
-    "indentation": 4,
-    "number-leading-zero": "never",
-    "unit-allowed-list": ["em", "rem", "s", "%"],
-    "color-function-notation": "legacy"
-  }
+	"extends": "stylelint-config-standard",
+	"rules": {
+		"indentation": 4,
+		"number-leading-zero": "never",
+		"unit-allowed-list": ["em", "rem", "s", "%"],
+		"color-function-notation": "legacy"
+	}
 }
 ```
 
@@ -254,24 +254,24 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-  module: {
-    rules: [
-      {
-        test: /.s?css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-      },
-    ],
-  },
-  optimization: {
-    // 注意，在development模式下，必须配置minimize为true，css-minimizer-webpack-plugin才会生效，才会对css进行压缩
-    minimize: true,
-    minimizer: [
-      // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-      // `...`,
-      new CssMinimizerPlugin(),
-    ],
-  },
-  plugins: [new MiniCssExtractPlugin()],
+	module: {
+		rules: [
+			{
+				test: /.s?css$/,
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+			},
+		],
+	},
+	optimization: {
+		// 注意，在development模式下，必须配置minimize为true，css-minimizer-webpack-plugin才会生效，才会对css进行压缩
+		minimize: true,
+		minimizer: [
+			// For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+			// `...`,
+			new CssMinimizerPlugin(),
+		],
+	},
+	plugins: [new MiniCssExtractPlugin()],
 };
 ```
 
@@ -320,55 +320,55 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
-  },
-  optimization: {
-    // minimize: true,
-  },
-  module: {
-    rules: [
-      {
-        test: /\.m?js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              [
-                '@babel/preset-env',
-                {
-                  // 按需加载
-                  useBuiltIns: 'usage',
-                  // core-js 版本
-                  corejs: 3,
-                  // 编译目标：node.js环境 还是 浏览器环境
-                  // targets: "defaults",
-                  // 允许手动指定对浏览器支持的兼容版本
-                  targets: {
-                    chrome: '58',
-                    ie: '9',
-                    firefox: '60',
-                    safari: '10',
-                    edge: '17',
-                  },
-                },
-              ],
-            ],
-          },
-        },
-      },
-    ],
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: '学习使用 webpack 编译 es',
-      template: './src/index.html',
-    }),
-  ],
+	mode: 'development',
+	entry: './src/index.js',
+	output: {
+		path: path.resolve(__dirname, './dist'),
+		filename: 'bundle.js',
+	},
+	optimization: {
+		// minimize: true,
+	},
+	module: {
+		rules: [
+			{
+				test: /\.m?js$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							[
+								'@babel/preset-env',
+								{
+									// 按需加载
+									useBuiltIns: 'usage',
+									// core-js 版本
+									corejs: 3,
+									// 编译目标：node.js环境 还是 浏览器环境
+									// targets: "defaults",
+									// 允许手动指定对浏览器支持的兼容版本
+									targets: {
+										chrome: '58',
+										ie: '9',
+										firefox: '60',
+										safari: '10',
+										edge: '17',
+									},
+								},
+							],
+						],
+					},
+				},
+			},
+		],
+	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: '学习使用 webpack 编译 es',
+			template: './src/index.html',
+		}),
+	],
 };
 ```
 
@@ -408,12 +408,202 @@ npm install eslint eslint-config-airbnb-base eslint-webpack-plugin eslint-plugin
 
   ```json
   {
-    "eslintConfig": {
-      "extends": "airbnb-base"
-    }
+  	"eslintConfig": {
+  		"extends": "airbnb-base"
+  	}
   }
   ```
 
-  ## 编译图片
+## 编译图片
 
-  ###
+参考：[webpack5 的使用（四）：加载资源文件](https://juejin.cn/post/6970333716040122381)
+
+### 编译 CSS 、 JS 中的图片资源
+
+在 Webpack5 中可以使用内置的 [Asset Modules](https://webpack.docschina.org/guides/asset-modules/) 轻松地在 css 或 js 中引入图片资源。Asset Modules 是一种模块类型，它允许使用资源文件而无需配置额外的 loader。
+
+修改配置文件:
+
+```js
+const path = require('path');
+
+module.exports = {
+	entry: './src/index.js',
+	output: {
+		filename: 'bundle.js',
+		path: path.resolve(__dirname, 'dist'),
+	},
+	module: {
+		rules: [
+			{
+				test: /\.css$/i,
+				use: ['style-loader', 'css-loader'],
+			},
++			{
++				test: /\.(png|jpe?g|gif)$/i,
++				type: 'asset',
++				generator: {
++					filename: 'img/[hash]',
++				},
++				parser: {
++					dataUrlCondition: {
++						maxSize: 8 * 1024,
++					},
++				},
++			},
+		],
+	},
+};
+```
+
+在 Webpack5 之前，通常使用：
+
+1. `row-loader`: 将文件导入为字符串
+2. `url-loader`: 将文件作为 data URI 内联到 bundle 中
+3. `file-loader`: 将文件发送到输出目录
+
+Asset Module 通过添加 4 种新的模块类型，来替换所有这些 loader：
+
+1. `asset/resource`: 发送一个单独的文件并导出 URL。之前是通过使用 `file-loader` 实现
+2. `asset/inline`: 导出一个资源的 data URI。之前是通过 `url-loader` 实现
+3. `asset/source`: 导出资源的源代码。之前是通过 `raw-loader` 实现
+4. `asset`: 在导出一个 data URI 和发送一个单独的文件之间自动选择。之前是通过 `url-loader`，并且配置资源体积闲置来实现
+
+当在 webpack 5 中使用旧的 assets loader（如 file-loader/url-loader/raw-loader 等）和 asset 模块时，你可能想停止当前 asset 模块的处理，并再次启动旧版 loader 处理，这可能会导致 asset 重复，你可以通过将 asset 模块的类型设置为 'javascript/auto' 来解决。
+
+```js
+module.exports = {
+  module: {
+   rules: [
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            }
+          },
+        ],
++       type: 'javascript/auto'
+      },
+   ]
+  },
+}
+```
+
+### 编译 html 中的图片资源
+
+[html-loader](https://www.npmjs.com/package/html-loader) 将 HTML 作为 string 导出，并且可以压缩 html。默认情况下，任何可被加载的属性都将被导入，例如 `<img src="image.png" />`
+
+1. 安装依赖
+
+```
+npm install html-loader --save-dev
+```
+
+2. 修改配置文件
+
+```js
+{
+	test: /\.html$/i,
+	loader: 'html-loader',
+},
+```
+
+### Resource 资源
+
+webpack.config.js
+
+```js
+const path = require('path');
+
+module.exports = {
+	entry: './src/index.js',
+	output: {
+		filename: 'main.js',
+		path: path.resolve(__dirname, 'dist'),
+	},
++	module: {
++		rules: [
++			{
++				test: /\.png/,
++				type: 'asset/resource',
++			},
++		],
++	},
+};
+```
+
+src/index.js
+
+```
+import mainImage from './images/main.png';
+
+img.src = mainImage; // '/dist/151cfcfa1bd74779aadb.png'
+```
+
+在使用 type 为 `asset/resource` 的 Asset Module 处理图片时，所有图片文件都将被发送到输出目录，并且其路径将被注入到 bundle 中。
+
+### 自定义输出文件名
+
+默认情况下，`asset/resource` 模块以 `[hash][ext][query]` 文件名发送到输出目录。
+
+可以通过在 webpack 配置中设置 `output.assetModuleFilename` 来修改此模板字符串：
+
+webpack.config.js
+
+```js
+const path = require('path');
+
+module.exports = {
+	entry: './src/index.js',
+	output: {
+		filename: 'main.js',
+		path: path.resolve(__dirname, 'dist'),
++		assetModuleFilename: 'images/[hash][ext][query]',
+	},
+	module: {
+		rules: [
+			{
+				test: /\.png/,
+				type: 'asset/resource',
+			},
+		],
+	},
+};
+```
+
+另一种自定义输出文件名的方式是，将某些资源发送到指定目录：
+
+```js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
++   assetModuleFilename: 'images/[hash][ext][query]'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.png/,
+        type: 'asset/resource'
+      },
++     {
++       test: /\.html/,
++       type: 'asset/resource',
++       generator: {
++         filename: 'static/[hash][ext][query]'
++       }
++     }
+    ]
+  },
+};
+```
+
+使用此配置，所有 `html` 文件都将被发送到输出目录中的 `static` 目录中。
+
+> `Rule.generator.filename` 与 `output.assetModuleFilename` 相同，并且仅适用于 `asset` 和 `asset/resource` 模块类型
