@@ -8,11 +8,11 @@
 6. [资源模块 (Asset Modules)](#asset-module)
 7. [开发服务器 (Dev Server)](#webpack-dev-server)
 
-## <h2 id="build-html">编译 HTML</h2>
+<h2 id="build-html">编译 HTML</h2>
 
 - [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
 
-## <h2 id="build-css">编译 CSS</h2>
+<h2 id="build-css">编译 CSS</h2>
 
 ### 将 CSS 编译成独立的文件 [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin#getting-started)
 
@@ -281,7 +281,7 @@ module.exports = {
 
 更多详细介绍可查看 [webpack](https://webpack.docschina.org/plugins/css-minimizer-webpack-plugin/#root) 官网对其介绍
 
-## <h2 id="build-js">编译 JS</h2>
+<h2 id="build-js">编译 JS</h2>
 
 ### ES 新特性编译
 
@@ -414,7 +414,7 @@ npm install eslint eslint-config-airbnb-base eslint-webpack-plugin eslint-plugin
   }
   ```
 
-## <h2 id="build-image">编译图片</h2>
+<h2 id="build-image">编译图片</h2>
 
 参考：[webpack5 的使用（四）：加载资源文件](https://juejin.cn/post/6970333716040122381)
 
@@ -608,8 +608,8 @@ module.exports = {
 
 > `Rule.generator.filename` 与 `output.assetModuleFilename` 相同，并且仅适用于 `asset` 和 `asset/resource` 模块类型
 
-## <h2 id="build-font">编译字体文件</h2>
+<h2 id="build-font">编译字体文件</h2>
 
-## <h2 id="asset-module">资源模块</h2>
+<h2 id="asset-module">资源模块</h2>
 
-## <h2 id="webpack-dev-server">webpack 开发服务器</h2>
+<h2 id="webpack-dev-server">webpack 开发服务器</h2>
