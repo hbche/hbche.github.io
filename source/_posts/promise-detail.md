@@ -129,7 +129,7 @@ promise.then(
 const MyPromise = require('./my-promise');
 
 const promise = new MyPromise((resolve, reject) => {
-  resolve('Hello Promise Reject~');
+  reject('Hello Promise Reject~');
 });
 promise.then(
   (value) => {
@@ -150,7 +150,7 @@ const MyPromise = require('./my-promise');
 
 const promise = new MyPromise((resolve, reject) => {
   resolve('Hello Promise Resolve~');
-  resolve('Hello Promise Reject~');
+  reject('Hello Promise Reject~');
 });
 promise.then(
   (value) => {
@@ -452,7 +452,7 @@ promise.then(
 // Hello Promise Resolve~ third.
 ```
 
-### 实现 then 方法的链式调用
+### <text style="color: red;">实现 then 方法的链式调用[难点]</text>
 
 **要想实现 then 的链式调用，主要需要解决两个问题：**
 
@@ -578,7 +578,7 @@ promise2.then(
 // Hello Promise2 Resolve~ promise2.
 ```
 
-### then 方法链式调用识别 Promise 对象自返回
+### then 方法链式调用识别 Promise 对象自返回 [难点]
 
 在 Promise 中，如果 `then` 方法返回的是自己的 `Promise` 对象，则会发生 `Promise` 的嵌套，这个时候程序会报错。
 
