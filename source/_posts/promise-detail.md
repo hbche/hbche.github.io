@@ -299,7 +299,7 @@ promise.then(
 
 **原因分析**
 
-如果执行器中存在**异步逻辑**，`then 函数又先于 异步逻辑 执行`，导致多次 `then` 调用存在覆盖 bug，即在后续的 then 调用会覆盖前面的 `then` 回调
+如果执行器中存在**异步逻辑**，`then 函数又先于 异步逻辑 执行`，导致多次 `then` 调用存在覆盖 bug，即在后面的 then 调用会覆盖前面的 `then` 回调
 
 ### 实现 then 方法的多次调用
 
@@ -376,7 +376,7 @@ class MyPromise {
 }
 ```
 
-**验证对此 then 调用**
+**验证多次 then 调用**
 
 ```js
 const promise = new MyPromise((resolve) => {
@@ -557,6 +557,7 @@ const promise1 = new MyPromise((resolve) => {
 const promise2 = promise1.then(
   (value) => {
     console.log(value + ' promise1.');
+    // 当前 Promise 的 resolve 回调函数的返回值将作为下一个链式调用的 then 中的 onFulfilled 回调函数的参数值
     return 'Hello Promise2 Resolve~';
   },
   (reason) => {
@@ -565,6 +566,7 @@ const promise2 = promise1.then(
 );
 
 promise2.then(
+  // 此处的 value 即为 'Hello Promise2 Resolve~'
   (value) => {
     console.log(value + ` promise2.`);
   },
