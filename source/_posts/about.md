@@ -5,7 +5,7 @@ tags:
 permalink: /about/
 ---
 
-## 关于我 (车汉斌)
+## 关于我 (hanbin)
 
 ### 教育背景：
 
